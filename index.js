@@ -2,12 +2,13 @@
 // for loop to loop through all 7 buttons on page
 // all the buttons have one the same class names and can be identified by the html code 
 // this. shows the current button that was clicked
-const numOfDrumBtns = document.getElementsByClassName('drum').length;
+const numOfDrumBtns = $('.drum').length;
 
 for(let i=0; i<numOfDrumBtns; i++) {
-    document.getElementsByClassName('drum')[i].addEventListener('click', function() {
+    $('.drum')[i].addEventListener('click', function() {
         let current = this.innerHTML;
         keySound(current);
+        animation(current);
     })
 }
 
@@ -16,6 +17,7 @@ for(let i=0; i<numOfDrumBtns; i++) {
 // adding event to the function logs all properties of the key pressed including which key
 document.addEventListener('keydown', function(event) {
     keySound(event.key);
+    animation(event.key);
 })
 
 //Plays the sound corresponding to pressed button/key
@@ -52,5 +54,10 @@ function keySound(key) {
     }
 }
 
-// let audio = new Audio('sounds/tom-1.mp3');
-//         audio.play();
+function animation(currentKey) {
+    let activeBtn = document.querySelector('.' + currentKey);
+    activeBtn.classList.add('pressed');
+    setTimeout(function() {
+        activeBtn.classList.remove('pressed');
+    }, 100);
+}
